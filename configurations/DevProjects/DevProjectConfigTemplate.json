@@ -1,0 +1,63 @@
+{
+    "subscriptionId": "<SubscriptionId>",
+    "resourceGroupName": "<Name>",
+    "name": "<Name>",
+    "location": "<Region>",
+    "devCenter": {
+        "subscriptionId":"<DC SubscriptionId>",
+        "name": "<DC Name>",
+        "resourceGroupName": "<DC ResourceGroup Name>"
+    },
+    "devboxlimits": 2,
+    "enableProjectCatalogs": true,
+    "devProjectAdmins": [{
+        "principalId": "<Object Id>",
+        "type": "User"
+    }],
+    "devProjectDevboxUsers": [{
+        "principalId": "<Object Id>",
+        "type": "User"
+    }],
+    "deploymentEnvironmentUsers":[{
+        "principalId": "<Object Id>",
+        "type": "Group"
+    }],
+    "tags": {
+        "AutoDeployed": "<TagInformation>"
+    },
+    "pools":[{
+        "name": "<Name>",
+        "devboxDefinition": "<Definition Name>",
+        "singleSignOn": "true",
+        "stopOnDisconnectAfter":0
+    }],
+    "networks": [
+        {
+            "name": "bfyoprimarynet",
+            "location": "<Region>",
+            "resourceGroupName": "<Name>-Vnet",
+            "devBoxAttach": {
+                "name": "<Name>",
+                "resourceGroupName":"<Name>-Vnet-ni",
+                "subnetName": "default",
+                "joinType": "Entra"
+            },
+            "properties": {
+                "cdrRange": [{
+                    "cdr": "17.0.0.0/16"
+                }],
+                "subnets": [
+                    {
+                        "name": "default",
+                        "cdrRange": "17.0.0.0/25"
+                    },
+                    {
+                        "name": "adesubnet",
+                        "cdrRange": "17.0.1.0/25"
+                    }
+                ]
+            }
+        }
+    ]
+    
+}
