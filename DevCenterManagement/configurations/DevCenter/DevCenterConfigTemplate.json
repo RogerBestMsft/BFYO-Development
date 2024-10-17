@@ -1,0 +1,70 @@
+{
+    "subscriptionId": "<SubscriptionId>",
+    "resourceGroupName": "<Name>",
+    "name": "<Name>",
+    "location": "<Region>",
+    "tags": {
+        "AutoDeployed": "<TagInformation>"
+    },
+    "galleries": [{
+        "resourceGroupName": "<Name>",
+        "name": "<Name>",
+        "description": "<Description>",
+        "location": "<Region>",
+        "tags":{
+            "AutoDeployed": "<TagInformation>"
+        }
+    }],
+    "environmenttypes":[{
+        "name": "development"
+    },{
+        "name": "staging"
+    }],
+    "devboxdefinitions":[
+    {
+        "name": "<Name>",
+        "location": "<Region>",
+        "properties": {
+            "imageReference": {
+                "id": "/subscriptions/<SubscriptionId>/resourceGroups/<Name>/providers/Microsoft.DevCenter/devcenters/<Name>/galleries/Default/images/microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2"
+            },
+            "sku": {                
+                "name": "general_i_8c32gb256ssd_v2"
+            },
+            "osstoragetype": "ssd_256gb",
+            "hibernateSupport": "Enabled"
+        }
+    },
+        {
+            "name": "<Name>",
+            "location": "<Region>",
+            "properties": {
+                "imageReference": {
+                    "id": "/subscriptions/<SubscriptionId>/resourceGroups/<Name>/providers/Microsoft.DevCenter/devcenters/<Name>/galleries/Default/images/microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2"
+                },
+                "sku": {                
+                    "name": "general_i_8c32gb256ssd_v2"
+                },
+                "osstoragetype": "ssd_256gb",
+                "hibernateSupport": "Enabled"
+            }
+    }],
+    "catalogs":[{
+        "name": "ADOCatalog",
+        "properties": {
+            "type":"adoGit",
+            "uri": "https://dev.azure.com/<Organization>/<Project>/_git/<Repo>",
+            "path": "<Path>"
+            },
+        "syncType": "Scheduled"
+    },
+{
+        "name": "GITCatalog",
+        "properties":{
+            "type": "gitHub",
+            "uri": "https://github.com/<Owner>/<Repo>.git",
+            "path": "<Path>"
+        },
+        "syncType": "Scheduled"
+    }]
+}
