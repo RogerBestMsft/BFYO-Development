@@ -28,8 +28,11 @@
     "pools":[{
         "name": "<Name>",
         "devboxDefinition": "<Definition Name>",
-        "singleSignOn": "true",
-        "stopOnDisconnectAfter":0
+        "singleSignOn": "Disabled",
+        "stopOnDisconnectAfter":0,
+        "networkConnectionName": "bfyoprimarynet<from network name>",
+        "networkConnectionLocation": "eastus",
+        "localAdministrator": "Enabled"
     }],
     "networks": [
         {
@@ -57,6 +60,33 @@
                     }
                 ]
             }
+        }
+    ],
+    "catalogs":[{
+        "name": "ADOCatalogProject",
+        "properties": {
+            "type":"adoGit",
+            "uri": "https://dev.azure.com/<uri>",
+            "path": "Devbox"
+            },
+        "syncType": "Scheduled"
+    },
+    {
+        "name": "GITCatalogProject",
+        "properties":{
+            "type": "gitHub",
+            "uri": "https://github.com/<uri>.git",
+            "path": "DevCenter/Catalogs"
+        },
+        "syncType": "Scheduled"
+    }],
+    "environmentTypes":[
+        {
+            "dcEnvName": "development",
+            "identity": "SystemManaged",
+            "subscription": "<SubscriptionId>",
+            "creatorRoleAssignment": ["b24988ac-6180-42a0-ab88-20f7382dd24c <Contributor role id>"],
+            "userRoleAssignment": []
         }
     ]
     

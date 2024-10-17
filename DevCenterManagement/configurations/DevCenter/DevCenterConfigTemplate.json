@@ -14,14 +14,6 @@
         "tags":{
             "AutoDeployed": "<TagInformation>"
         }
-    },{
-        "resourceGroupName": "<Name>SupportB",
-        "name": "<Name>",
-        "description": "<Description>",
-        "location": "<Region>",
-        "tags":{
-            "AutoDeployed": "<TagInformation>"
-        }
     }],
     "environmenttypes":[{
         "name": "development"

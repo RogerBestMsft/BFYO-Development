@@ -1,16 +1,15 @@
 param (
-    [string] $devCenterConfigFolder = "",
-    [string] $subscriptionId = "",
-    [string] $projectConfigFolder = ""
+    [string] $devCenterConfigFolder,
+    [string] $subscriptionId,
+    [string] $projectConfigFolder
 )
 
-
-# Check az version
+# Check az version just informational
 Write-Output "------- Azure Cli information -------"
 Write-Output $(az version)
 
 # Interactive login to Azure
-#az login
+az login
 
 # Set the appropriate subscription 
 az account set --subscription $subscriptionId
@@ -20,8 +19,7 @@ $W365PRINCIPALID="$(az ad sp show --id 0af06dc6-e4b5-4f28-818e-e78e62d137a5 --qu
 
 # Get all files in devcenter folder
 $devCenterConfigFiles = Get-ChildItem -Path $devCenterConfigFolder -Name
-# Deploy the DevCenter
-#az deployment group create --resource-group $psObject.resourceGroupName --name "$($psObject.name)-deploy" --template-file "DevCenter\Primary.bicep" --parameters devCenterConfigObject=@$configurationFile
+# Deploy the DevCenters
 foreach ($dcConfig in $devCenterConfigFiles) {
     $currentConfig = Join-Path -Path $devCenterConfigFolder -ChildPath $dcConfig
     $psObject = Get-Content -Path $currentConfig -Raw | ConvertFrom-Json
@@ -31,7 +29,7 @@ foreach ($dcConfig in $devCenterConfigFiles) {
 
 
 $devProjectConfigFiles = Get-ChildItem -Path $projectConfigFolder -Name
-# Deploy the DevCenter
+# Deploy the Projects
 
 foreach ($dpConfig in $devProjectConfigFiles) {
     $currentConfig = Join-Path -Path $projectConfigFolder -ChildPath $dpConfig
