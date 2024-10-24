@@ -66,5 +66,9 @@
             "path": "<Path>"
         },
         "syncType": "Scheduled"
+    }],
+    "keyvaults"[{
+        "name: "keyvaultname"
+        "devCenterName" : "<DevCenter Name>
     }]
 }

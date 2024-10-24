@@ -2,6 +2,7 @@ targetScope = 'subscription'
 
 param devCenterConfigObject object
 param win365Id string
+param repoSecrets string
 
 resource devCenterResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: devCenterConfigObject.resourceGroupName
@@ -9,13 +10,13 @@ resource devCenterResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' 
   tags: devCenterConfigObject.tags
 }
 
-
 module devcenter 'DevCenter.bicep' = {
   name: devCenterConfigObject.name
   scope: devCenterResourceGroup
   params: {
     devCenterConfigObject: devCenterConfigObject
-  }  
+    repoSecrets: repoSecrets
+  }
 }
 
 resource galleryResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' = [for galleryrg in devCenterConfigObject.galleries: {
@@ -23,7 +24,6 @@ resource galleryResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' = 
   location: galleryrg.location
   tags: devCenterConfigObject.tags
 }]
-
 
 module dcgallery '../Shared/newGallery.bicep' = [for (gallery,i) in devCenterConfigObject.galleries: {
   name: '${take(deployment().name, 36)}-gallery${i}'
