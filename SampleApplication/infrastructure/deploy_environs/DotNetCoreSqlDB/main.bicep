@@ -14,9 +14,6 @@ param sqlAdministratorLogin string
 @secure()
 param sqlAdministratorPassword string
 
-@description('Specifies managed identity name')
-param managedIdentityName string
-
 var databaseName = 'sampledb'
 
 // Data resources
@@ -74,10 +71,7 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
     serverFarmId: hostingPlan.id
   }
   identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${msi.id}': {}
-    }
+    type: 'SystemAssigned'    
   }
 
   resource connectionString 'config@2020-12-01' = {
@@ -91,20 +85,14 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
   }
 }
 
-// Managed Identity resources
-resource msi 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
-  name: managedIdentityName
-  location: location
-}
-
-resource roleassignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(msi.id, resourceGroup().id, 'b24988ac-6180-42a0-ab88-20f7382dd24c')
-  properties: {
-    principalType: 'ServicePrincipal'
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
-    principalId: msi.properties.principalId
-  }
-}
+// resource roleassignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+//   name: guid(msi.id, resourceGroup().id, 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+//   properties: {
+//     principalType: 'ServicePrincipal'
+//     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+//     principalId: msi.properties.principalId
+//   }
+// }
 
 // Monitor
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
