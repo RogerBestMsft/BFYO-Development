@@ -2,6 +2,7 @@ name: DotNetCoreSqlDB
 summary: This is a deployment of a Azure Container App using Bicep.
 description: Deploys a Container App within a Container App Environment, along with a Log Analytics Workspace
 templatePath: main.bicep
+runner: ARM
 parameters:
 - id: "sqlAdministratorLogin"
   type: "string"
