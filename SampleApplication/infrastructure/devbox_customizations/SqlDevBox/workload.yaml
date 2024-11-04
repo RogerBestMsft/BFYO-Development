@@ -1,4 +1,4 @@
 $schema: "1.0"
 name: SqlDevBox
 tasks:
-  - name: InstallSqlManStudio
+  - name: InstallSqlManStudioxx
