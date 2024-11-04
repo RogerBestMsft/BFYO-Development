@@ -1,5 +1,4 @@
 $schema: "1.0"
-name: InstallSqlManStudio
 command: './InstallSqlManStudio.ps1'
 documentation:
   notes: This will install the Sql Management Studio
