@@ -1,0 +1,1 @@
+New-Item c:\temp\diagnostics.txt -ItemType File

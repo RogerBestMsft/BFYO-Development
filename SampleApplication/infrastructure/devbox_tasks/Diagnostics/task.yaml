@@ -1,0 +1,5 @@
+$schema: "1.0"
+name: Diagnostics
+command: './Diagnostics.ps1'
+documentation:
+  notes: This will install Diagnostics
