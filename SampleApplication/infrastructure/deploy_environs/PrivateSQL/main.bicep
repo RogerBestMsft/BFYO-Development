@@ -6,8 +6,11 @@ param location string = resourceGroup().location
 var sqlServerName = 'sqlserver${uniqueString(resourceGroup().id)}'
 var databaseName = 'sample-db'
 var privateEndpointName = 'myPrivateEndpoint'
+var vnetName = 'vnet${uniqueString(resourceGroup().id)}'
+var subnetName = 'adesubnet'
 
-resource sqlServer 'Microsoft.Sql/servers@2021-11-01-preview' = {
+
+resource sqlServer 'Microsoft.Sql/servers@2021-11-01-preview' = {  
   name: sqlServerName
   location: location
   properties: {
@@ -19,33 +22,34 @@ resource sqlServer 'Microsoft.Sql/servers@2021-11-01-preview' = {
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-11-01-preview' = {
-  name: '${sqlServerName}/${databaseName}'
+  parent: sqlServer
+  name: databaseName
   location: location
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
   }
 }
 
-resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = { 
-  name: 'DevboxVnetWest3'
-}
-// resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-//   name: vnetName
-//   location: location
-//   properties: {
-//     addressSpace: {
-//       addressPrefixes: ['10.0.0.0/16']
-//     }
-//     subnets: [
-//       {
-//         name: subnetName
-//         properties: {
-//           addressPrefix: '10.0.0.0/24'
-//         }
-//       }
-//     ]
-//   }
+// resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = { 
+//   name: 'DevboxVnetWest3'
 // }
+resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
+  name: vnetName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: ['10.0.0.0/16']
+    }
+    subnets: [
+      {
+        name: subnetName
+        properties: {
+          addressPrefix: '10.0.0.0/24'
+        }
+      }
+    ]
+  }
+}
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-02-01' = {
   name: privateEndpointName
