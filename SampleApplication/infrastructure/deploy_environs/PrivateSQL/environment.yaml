@@ -1,8 +1,8 @@
 name: PrivateSQL
-summary: This is a deployment of a Azure Container App using Bicep.
+summary: This is a deployment of private SQL Server with VNet.
 description: SQL connected by private link to vnet
 templatePath: main.bicep
-runner: "bfyocontainerregistry.azurecr.io/ade:latest"
+runner: ARM
 parameters:
 - id: "sqlAdministratorLogin"
   type: "string"
