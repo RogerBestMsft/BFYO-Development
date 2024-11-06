@@ -1,0 +1,12 @@
+name: PrivateSQL
+summary: This is a deployment of a Azure Container App using Bicep.
+description: SQL connected by private link to vnet
+templatePath: main.bicep
+runner: "bfyocontainerregistry.azurecr.io/ade:latest"
+parameters:
+- id: "sqlAdministratorLogin"
+  type: "string"
+  required: true
+- id: "sqlAdministratorPassword"
+  type: "string"
+  required: true
