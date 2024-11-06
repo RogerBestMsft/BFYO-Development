@@ -7,6 +7,6 @@ parameters:
 - id: "sqlAdministratorLogin"
   type: "string"
   required: true
-- id: "sqlAdministratorPassword"
+- id: "sqlAdministratorLoginPassword"
   type: "string"
   required: true
