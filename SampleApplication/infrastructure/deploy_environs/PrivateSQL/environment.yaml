@@ -2,7 +2,7 @@ name: PrivateSQL
 summary: This is a deployment of private SQL Server with VNet.
 description: SQL connected by private link to vnet
 templatePath: main.bicep
-runner: ARM
+runner: "bfyoprivateregistery.azurecr.io/ade:1.0.0"
 parameters:
 - id: "sqlAdministratorLogin"
   type: "string"
