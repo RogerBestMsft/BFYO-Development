@@ -1,5 +1,5 @@
 $schema: "1.0"
-name: Diagnostics
+name: DiagnosticsID
 image: MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365
 tasks:
     - name: BFYO-Catalog/Diagnostics
