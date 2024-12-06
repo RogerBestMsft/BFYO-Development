@@ -79,6 +79,15 @@ module environmentType '../Shared/newEnvironmentType.bicep' = [for (env, index) 
 }]
 
 
+module keyvaultAssignment '../Shared/projectkeyvaultassign.bicep' = [for (vault,i) in devProjectConfigObject.keyvaults: {
+  scope: devCenterGroup
+  name: '${take(deployment().name, 36)}-vault${i}'
+  params: {
+    keyvaultName: vault.name
+    projectName: devProjectConfigObject.name  
+  }
+}]
+
 output devProjectObject object = devproject
 output devProjectNetworks array  = [ for (network,i) in devProjectConfigObject.networks: {
   id: devprojectnetwork[i].outputs

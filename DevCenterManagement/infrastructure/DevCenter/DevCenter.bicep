@@ -1,4 +1,5 @@
 param devCenterConfigObject object
+@secure()
 param repoSecrets string
 
 // Create the DevCenter using the devCenterConfigObject from the configurations
@@ -13,6 +14,17 @@ resource devcenter 'Microsoft.DevCenter/devcenters@2024-08-01-preview' = {
     projectCatalogSettings: {
       catalogItemSyncEnableStatus: 'Enabled'
     }
+    networkSettings: {
+      microsoftHostedNetworkEnableStatus: 'Enabled'
+    }
+    devBoxProvisioningSettings: {
+      installAzureMonitorAgentEnableStatus: 'Enabled'
+    }
+    restrictedResourceTypes: [
+      'AttachedNetworks'
+      'Images'
+      'Skus'
+    ]
   }
 }
 

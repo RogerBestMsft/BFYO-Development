@@ -2,6 +2,7 @@ targetScope = 'subscription'
 
 param devCenterConfigObject object
 param win365Id string
+@secure()
 param repoSecrets string
 
 resource devCenterResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' = {
