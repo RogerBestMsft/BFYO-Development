@@ -1,7 +1,7 @@
 
 # This is a Chocolatey package installation task for Dev Box.
 $schema: "1.0"
-name: InstallJava
-description: Use Winget to install Java.
+name: InstallNode
+description: Use Winget to install Node.
 author: Microsoft Corporation
-command: "./InstallJava.ps1"
+command: "./InstallNode.ps1"
