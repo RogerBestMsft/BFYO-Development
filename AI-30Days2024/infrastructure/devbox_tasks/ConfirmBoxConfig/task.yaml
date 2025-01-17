@@ -1,0 +1,4 @@
+
+$schema: "1.0"
+name: ConfirmBoxConfig
+command: "./ConfirmConfig.ps1"
