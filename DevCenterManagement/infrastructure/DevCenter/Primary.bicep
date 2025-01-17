@@ -2,8 +2,6 @@ targetScope = 'subscription'
 
 param devCenterConfigObject object
 param win365Id string
-@secure()
-param repoSecrets string
 
 resource devCenterResourceGroup 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: devCenterConfigObject.resourceGroupName
@@ -16,7 +14,6 @@ module devcenter 'DevCenter.bicep' = {
   scope: devCenterResourceGroup
   params: {
     devCenterConfigObject: devCenterConfigObject
-    repoSecrets: repoSecrets
   }
 }
 
@@ -49,10 +46,10 @@ module gallerydcconnect '../Shared/devcenterGalleryConnect.bicep' = [for (galler
   }
  }]
 
-output test array = [for (gal,i) in devCenterConfigObject.galleries: {
-  name: dcgallery[i].name
-  outputs: dcgallery[i].outputs
-}]
+// output test array = [for (gal,i) in devCenterConfigObject.galleries: {
+//   name: dcgallery[i].name
+//   outputs: dcgallery[i].outputs
+// }]
 
 output devcenterObject object = devcenter.outputs
 

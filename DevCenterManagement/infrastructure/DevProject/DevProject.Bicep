@@ -17,6 +17,18 @@ resource devProject 'Microsoft.DevCenter/projects@2024-02-01' = {
   }
 }
 
+// Add secrets for the catalogs
+module catalogSecrets '../Shared/addSecret.bicep' = [for (catalog, index) in devProjectConfigObject.catalogs : if(catalog.properties.type == 'gitHub'){  
+  name: '${catalog.CatalogSecret.secretName}-Z-secret${index}'
+  scope: resourceGroup(devProjectConfigObject.devCenter.resourceGroupName)
+  params: {
+    keyvaultName: catalog.CatalogSecret.keyvaultName
+    secretName: catalog.CatalogSecret.secretName
+    secretValue: catalog.CatalogSecret.secretValue
+    tags: devProjectConfigObject.tags    
+  }
+}]
+
 
 // Create the DevCenter catalogs - GitHub
 resource ghcatalogs 'Microsoft.DevCenter/projects/catalogs@2024-08-01-preview' = [for (catalog, index) in devProjectConfigObject.catalogs : if(catalog.properties.type == 'gitHub'){
@@ -26,11 +38,12 @@ resource ghcatalogs 'Microsoft.DevCenter/projects/catalogs@2024-08-01-preview' =
     gitHub: {
       uri: catalog.properties.uri
       path: catalog.properties.path
+      secretIdentifier: catalogSecrets[index].outputs.secretUri
     }
   }
 }]
 
-// Create the DevCenter catalogs - GitHub
+// Create the DevCenter catalogs - ADO
 resource adocatalogs 'Microsoft.DevCenter/projects/catalogs@2024-08-01-preview' = [for (catalog, index) in devProjectConfigObject.catalogs : if(catalog.properties.type == 'adoGit'){
   parent: devProject
   name: catalog.name

@@ -1,8 +1,6 @@
 param keyvaultObject object
 param tags object
 param devCenterName string
-@secure()
-param secretValue string
 
 var secretId = guid(keyvaultObject.name, resourceGroup().name)
 var secretsOfficerRoleResourceId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7')
@@ -43,16 +41,34 @@ resource keyVaultAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01'
 }
 
 // add the github pat token to the key vault
-resource repoAccessSecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  name: 'github-pat'
-  parent: keyVault
-  properties: {
-    value: secretValue
-    attributes: {
-      enabled: true
-    }
-  }
-  tags: tags
-}
+// resource repoAccessSecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+//   name: 'github-pat'
+//   parent: keyVault
+//   properties: {
+//     value: secretValue
+//     attributes: {
+//       enabled: true
+//     }
+//   }
+//   tags: tags
+// }
 
-output secretUri string = repoAccessSecret.properties.secretUriWithVersion
+
+// module kvSecrets '../Shared/addSecret.bicep' = [for (secret,i) in secretValue: {
+//   name: '${take(deployment().name, 36)}-vault${i}'
+//   params: {
+//     keyvaultName: keyVault.name
+//     secretName: secret.name
+//     secretValue: secret.value
+//     tags: tags    
+//   }
+// }]
+
+
+
+//output secretUri array = kvSecrets.properties.secretUriWithVersion
+// output secretUri array  = [ for (secret,i) in secretValue: {
+//   name: secret
+//   value: secretValue[i].outputs
+// }]
+
